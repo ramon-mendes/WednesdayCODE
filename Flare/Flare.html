@@ -1,0 +1,117 @@
+<!-- OmniView:on -->
+<html>
+
+<head>
+	<script type="text/tiscript">
+		class Flare : Behavior
+		{
+			const DEBUG_GFX = false;
+			const BG_HALFSIZE = 64;
+			const LAYERS_URL = ["flareimages/lflare1.png", "flareimages/lflare3.png", "flareimages/lflare2.png", "flareimages/lflare3.png", "flareimages/lflare4.png", ]
+			const LAYERS_DIST = [167, 86, 115, -120, -180];
+			var ns_layers_img = [];
+
+			function attached()
+			{
+				for( var url in LAYERS_URL )
+				{
+					self.loadImage(self.url(url), function(img, status) {
+						stdout.println(img, status);
+						if(!img)
+							throw "Failed loading flare image";
+						ns_layers_img.push(img);
+					});
+				}
+				
+				this.onSize();
+				this.mouseX = this.mouseY = 0;
+				this.paintContent = this.render;
+			}
+			
+			function onSize()
+			{
+				var (x, y) = self.box(#dimension);
+				this.m_origin_x = x/2;
+				this.m_origin_y = y/2;
+				
+				// fucking logic; the math here is the following:
+				// nor even I can describe, lol
+				var (width,height) = self.box(#dimension);
+				this.m_vsize_x = Math.abs(width/2 - this.m_origin_x).toInteger() * 2;
+				this.m_vsize_y = Math.abs(height/2 - this.m_origin_y).toInteger() * 2;
+				this.m_vmouse_adjy = this.m_vsize_y;
+				this.m_vsize_x = width + this.m_vsize_x;
+				this.m_vsize_y = height + this.m_vsize_y;
+				this.refresh();
+			}
+
+			function onMouse(evt)
+			{
+				if( evt.type==Event.MOUSE_MOVE )
+				{
+					this.mouseX = evt.x;
+					this.mouseY = evt.y;
+					this.refresh();
+				}
+			}
+
+			function render(gfx)
+			{
+				if( ns_layers_img.length != LAYERS_URL.length)
+					return;
+				
+				if( DEBUG_GFX )
+					gfx.lineWidth(1.5).lineColor( color(0,0,0) ).ellipse( this.m_origin_x, this.m_origin_y, 10 );
+
+				var mousePerWindowX = (this.mouseX<<1) / this.m_vsize_x.toFloat() - 1;
+				var mousePerWindowY = (this.mouseY<<1) / this.m_vsize_y.toFloat() - 1;
+
+				var fInEase = : p { return p*p*p*(p*5) };// custom ease Anonymous-function
+				var alpha = 1 - Float.max( Math.abs(mousePerWindowX), Math.abs(mousePerWindowY) );
+				alpha = fInEase(alpha);
+
+				for( var (i,el) in LAYERS_DIST )
+				{
+					var distanceOffsetX = LAYERS_DIST[i]*1.6 * mousePerWindowX;
+					var distanceOffsetY = LAYERS_DIST[i]*1.6 * mousePerWindowY;
+					
+					gfx.imageBlendMode = Graphics.BLEND_MULTIPLY;
+					gfx.blendImage( ns_layers_img[i],
+									this.m_origin_x + distanceOffsetX - BG_HALFSIZE,
+									this.m_origin_y +  distanceOffsetY - BG_HALFSIZE,
+									alpha);
+				}
+			}
+
+			function AnimateFlare()
+			{
+				// TODO: programatically animate the flare
+			}
+		}
+	</script>
+
+	<style>
+		html { overflow: hidden; }
+		body
+		{
+			size: *;
+			margin: 0;
+			font: system;
+			background: url(blackgrain.png);
+			prototype: "Flare";
+		}
+		#flare
+		{
+			margin: *;
+			width: max-content;
+		}
+	</style>
+</head>
+
+<body>
+	<div #flare>
+		<img src="logo.png" />
+	</div>
+</body>
+
+</html>	

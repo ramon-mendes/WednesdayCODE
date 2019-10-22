@@ -1,0 +1,106 @@
+<!-- OmniView:on, console:off -->
+<html>
+<head>
+	<style>
+		body
+		{
+			margin: 0;
+			background: url(bg-repeat.jpg);
+			flow: vertical;
+			horizontal-align: center;
+		}
+	</style>
+
+	<style>
+		// The Diablo silver button
+		@image-map DiabloButton
+		{
+			src: url(btns.png);
+			cells: 1 3;
+			items: normal, hover, pressed;
+
+		}
+		#btn-wrap
+		{
+			size: 315px 113px;
+			background: url(prepurchase-small.png);
+		}
+		button
+		{
+			size: 206px 36px;
+			margin: 42px 56px;
+			padding: 0;
+			background-image: image-map(DiabloButton, normal);
+			cursor: pointer;
+			font-size: 18px;
+			font-weight: bold;
+		}
+		button:hover { background-image: image-map(DiabloButton, hover); }
+		button:active { background-image: image-map(DiabloButton, pressed); }
+	</style>
+
+	<style>
+		// Hero / video area
+		#hero
+		{
+			height: 1180px;
+			padding-top: 30px;
+			flow: vertical;
+			horizontal-align: center;
+		}
+		#hero #stack
+		{
+			flow: stack;
+			size: 1006px 461px;
+			background: url(home-hero-frame.png);
+		}
+		#hero #btn-wrap { margin: 240px 0 0 20px; }
+		
+		#hero video
+		{
+			margin: 25px 24px 33px 24px;
+			size: *;
+		}
+	</style>
+
+	<style>
+		// Blog entries area (with expandable image)
+		#main
+		{
+			flow: horizontal;
+			background-image: url(frame.png);
+			background-repeat: expand;
+			background-position: 261 216 261 216;
+		}
+		#main #body
+		{
+			margin: 200px;
+			size: *;
+			background: #12110F;
+		}
+		#main #body .bg { width: *; background: center no-repeat; }
+		#main #body .bg.bg-top { background-image: url(content-top.jpg); height: 80px; }
+		#main #body .bg.bg-bot { background-image: url(content-bot-bg.jpg); height: 308px; }
+	</style>
+</head>
+
+<body>
+	<div #btn-wrap>
+		<button>View</button>
+	</div>
+
+	<div #hero>
+		<div #stack>
+			<video src="video.mp4"></video>
+		</div>
+	</div>
+
+	<div #main>
+		<div #body>
+			<div .bg.bg-top />
+			<img src="blog-separator-2.png" />
+			<div .bg.bg-bot />
+		</div>
+	</div>
+</body>
+</html>

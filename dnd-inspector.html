@@ -1,0 +1,20 @@
+<!-- OmniView:on -->
+<html>
+<body>
+	<script type="text/tiscript">
+		self.onExchange = function() {
+
+		};
+
+		$(h1).on("mousedown", function() {
+			count();
+			view.performDrag(this, {
+				text: "text",
+				html: "html"
+			});
+		});
+	</script>
+	
+	<h1>FontDrop</h1>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!-- OmniView:on, console:off -->
+<html>
+<head>
+	<style>
+		body
+		{
+			margin: 0;
+		}
+
+		section
+		{
+			size: * 300px;
+			background-color: #F76C5E;
+			background-image: url(overlay.svg);
+			background-size: 110%;
+
+			flow: horizontal;
+			vertical-align: middle;
+			horizontal-align: middle;
+			color: white;
+			font-size: 24px;
+			font-family: system;
+			font-weight: 600;
+		}
+		section:hover
+		{
+			background-position: -15px;
+			background-color: #5ec8f7;
+			transition:
+				background-position(quart-out, 0.5s, quart-in)
+				background-color(quad-out, 0.3s, quad-in, 0.5s);
+		}
+
+		img
+		{
+			size: 237px 53px;
+			foreground-position: 0 53px;
+			margin-left: 16px;
+		}
+		section:hover img 
+		{
+			foreground-position: 0 0;
+			transition: foreground(quart-out, 0.5s, quart-in);
+		}
+	</style>
+</head>
+
+<body>
+	<section>
+		Welcome to Wednesday CODE! <img src="http://misoftware.rs/Content/img/logo_mi.png" />
+	</section>
+
+	<p>
+		<small>Inspiration from: <a href="https://staticman.net/">https://staticman.net/</a></small>
+	</p>
+</body>
+</html>

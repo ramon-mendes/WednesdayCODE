@@ -1,0 +1,42 @@
+<!-- OmniView:on, console:off -->
+<html>
+<script type="text/tiscript">
+	var img = self.loadImage($(img).@#src, function(img) {
+		var step = 0;
+		var i = 0;
+		
+		var el_div = $(div);
+		el_div.style#width = img.width;
+		el_div.style#height = img.height;
+
+		el_div.paintBackground = function(gfx) {
+			for(var i = 0; i < img.height; ++i)
+			{
+				gfx.blendImage(img,
+					Math.sin(40 * (step+i / 2.0) * (i / 2.0))*3,
+					i,
+					0,
+					img.height-i,
+					img.width,
+					1,
+					(img.height.toFloat() - i) / img.height.toFloat()
+				);
+			}
+			step += 0.0001;
+		};
+
+		self.timer(35, ::el_div.refresh());
+	});
+</script>
+
+<style>
+	html, body { background: none; }
+
+	div { margin-top: -1px; }
+</style>
+
+<body>
+	<img src="Merry-Xmas-Slot-Logo.jpg" />
+	<div></div>
+</body>
+</html>

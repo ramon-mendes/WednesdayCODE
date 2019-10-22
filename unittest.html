@@ -1,0 +1,13 @@
+<html>
+    <head>
+        <script type="text/tiscript">
+          event click $(button) {
+            var el = $(body).$prepend(<div>Hello</div>);
+            stdout.println(el);  
+          }
+        </script>
+    </head>
+    <body>
+      <button>Test</button>
+    </body>
+</html>
